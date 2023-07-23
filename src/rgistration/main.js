@@ -10,28 +10,28 @@ subForm.onsubmit = (e) => {
   formArray = JSON.parse(localStorage.getItem("formData"))
     ? JSON.parse(localStorage.getItem("formData"))
     : [];
-  if (
-    formArray.some((data) => {
-      return data.email == email;
-    })
-  ) {
-    msg.innerHTML = setAllert("Already registered by this email");
-  } else {
-    formArray.push({
-      name: name,
-      email: email,
-      password: password,
-    });
-    setData("formData", formArray);
-    msg.innerHTML = setAllert("registered successfully", "success");
 
-    console.log(formArray);
+  if (!name || !email || !password) {
+    msg.innerHTML = setAllert("All fields are required", "danger");
+  } else {
+    if (
+      formArray.some((data) => {
+        return data.email == email;
+      })
+    ) {
+      msg.innerHTML = setAllert("Already registered by this email");
+    } else {
+      formArray.push({
+        name: name,
+        email: email,
+        password: password,
+      });
+      setData("formData", formArray);
+      msg.innerHTML = setAllert("registered successfully", "success");
+      e.target.reset();
+      console.log(formArray);
+    }
   }
-  //   if (!name || !email || !password) {
-  //     msg.innerHTML = setAllert("All fields are required", "danger");
-  //   } else {
-  //     msg.innerHTML = setAllert("registered successfully", "success");
-  //   }
 };
 
 loginBtn.onclick = () => {
